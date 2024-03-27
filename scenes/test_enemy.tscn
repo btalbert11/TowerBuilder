@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1a16n7b3t0qg"]
+
+[ext_resource type="Texture2D" uid="uid://dkyat2l0d1pc1" path="res://icon.svg" id="1_d25j1"]
+[ext_resource type="Script" path="res://scripts/test_enemy.gd" id="1_v5abt"]
+[ext_resource type="Script" path="res://nodes/HurtboxComponent.gd" id="2_xeo3r"]
+[ext_resource type="Script" path="res://nodes/HealthComponent.gd" id="3_855lm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrlet"]
+size = Vector2(46, 46)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mq8w"]
+size = Vector2(50, 51)
+
+[node name="TEST_ENEMY" type="Node2D" node_paths=PackedStringArray("_health_component", "_hurtbox", "_health_bar") groups=["Enemies"]]
+script = ExtResource("1_v5abt")
+_health_component = NodePath("HealthComponent")
+_hurtbox = NodePath("HurtboxComponent")
+max_health = null
+_health_bar = NodePath("Healthbar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("1_d25j1")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_qrlet")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_xeo3r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_0mq8w")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_855lm")
+
+[node name="Healthbar" type="ColorRect" parent="."]
+offset_left = -24.0
+offset_top = -31.0
+offset_right = 24.0
+offset_bottom = -28.0
+color = Color(0.792157, 0, 0.0313726, 1)
+
+[connection signal="attacked" from="HurtboxComponent" to="." method="_on_hurtbox_component_attacked"]
+[connection signal="no_health" from="HealthComponent" to="." method="_on_health_component_no_health"]

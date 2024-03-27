@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccpjqr5hk5iqx"]
+
+[ext_resource type="Script" path="res://nodes/HitboxComponent.gd" id="1_6w6vp"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_54bh1"]
+[ext_resource type="Texture2D" uid="uid://dp2xat71hih8b" path="res://art/sprites/Tower 1 Bullet.png" id="3_dblnh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m22ih"]
+radius = 13.0
+height = 51.0
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_54bh1")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_6w6vp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 0.5)
+shape = SubResource("CapsuleShape2D_m22ih")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, 4.76837e-07)
+scale = Vector2(1.859, 2.824)
+texture = ExtResource("3_dblnh")
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]

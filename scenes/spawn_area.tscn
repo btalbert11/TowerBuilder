@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm7mlxmyrwkhd"]
+
+[ext_resource type="Script" path="res://scripts/spawn_area.gd" id="1_7jnae"]
+[ext_resource type="PackedScene" uid="uid://b1a16n7b3t0qg" path="res://scenes/test_enemy.tscn" id="2_d7lwq"]
+
+[node name="SpawnArea" type="Area2D" node_paths=PackedStringArray("_timer")]
+script = ExtResource("1_7jnae")
+enemy_spawn = ExtResource("2_d7lwq")
+_timer = NodePath("spawn_timer")
+
+[node name="spawn_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]
