@@ -2,14 +2,16 @@ class_name Turret
 extends Node2D
 
 @export var bullet_type: PackedScene
-@export var bullet_speed: float = 2000
+@export var bullet_speed: float = 1000
 @export var damage: float = 10
-@export var accuracy_variance: float = 100
+@export var accuracy_variance: float = 75
 @export var fire_rate: float = 0.3
 @export var attack_range: float = 550
+@export var max_health: float = 10
 
 @export var _timer: Timer
 @export var _attack_collision: CollisionShape2D
+@export var _health_component: HealthComponent
 
 var targeting_queue: Array = []
 var current_target: Node2D
@@ -34,7 +36,7 @@ func _ready():
 	_timer.timeout.connect(fire)
 
 	_attack_collision.shape.radius = attack_range
-
+	_health_component.set_max_health(max_health)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,7 +48,7 @@ func fire():
 	if current_target != null: # Have a target
 		var rng = RandomNumberGenerator.new()
 		var bullet = bullet_type.instantiate()
-		bullet.target = current_target.global_position + Vector2(rng.randf_range(0, accuracy_variance), rng.randf_range(0, accuracy_variance))
+		bullet.target = current_target.global_position + Vector2(rng.randf_range(-accuracy_variance, accuracy_variance), rng.randf_range(-accuracy_variance, accuracy_variance))
 		bullet.global_position = global_position
 		get_tree().get_root().get_node("Game").add_child(bullet)
 		bullet.bullet_speed = bullet_speed

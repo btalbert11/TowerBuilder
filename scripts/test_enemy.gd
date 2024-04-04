@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 @export var _health_component: HealthComponent
 @export var _hurtbox: HurtboxComponent
@@ -17,7 +17,9 @@ func _process(delta):
 	pass
 	
 func _physics_process(delta):
-	velocity = Vector2(0, 1);
+	velocity = Vector2(0, 75);
+	
+	var collision = move_and_slide()
 
 
 func _on_hurtbox_component_attacked(attack):
@@ -28,5 +30,4 @@ func _on_hurtbox_component_attacked(attack):
 
 
 func _on_health_component_no_health(current_health):
-	print("DEAD")
 	queue_free()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://chlqw0c6wle27"]
+[gd_scene load_steps=10 format=3 uid="uid://chlqw0c6wle27"]
 
 [ext_resource type="Texture2D" uid="uid://dkyat2l0d1pc1" path="res://icon.svg" id="1_klo4j"]
 [ext_resource type="Script" path="res://scripts/turret.gd" id="1_wilm3"]
 [ext_resource type="Resource" uid="uid://baur5adkaxt8n" path="res://resources/grid.tres" id="2_a0he5"]
 [ext_resource type="PackedScene" uid="uid://ccpjqr5hk5iqx" path="res://scenes/bullet.tscn" id="2_scqwi"]
 [ext_resource type="Script" path="res://nodes/HurtboxComponent.gd" id="4_6584f"]
+[ext_resource type="Script" path="res://nodes/HealthComponent.gd" id="6_yylui"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwrml"]
 size = Vector2(80, 80)
@@ -15,11 +16,12 @@ radius = 272.971
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8y25k"]
 size = Vector2(79, 76)
 
-[node name="Turret" type="Node2D" node_paths=PackedStringArray("_timer", "_attack_collision")]
+[node name="Turret" type="Node2D" node_paths=PackedStringArray("_timer", "_attack_collision", "_health_component")]
 script = ExtResource("1_wilm3")
 bullet_type = ExtResource("2_scqwi")
 _timer = NodePath("Timer")
 _attack_collision = NodePath("AttackRange/CollisionShape2D")
+_health_component = NodePath("HealthComponent")
 grid = ExtResource("2_a0he5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -49,6 +51,9 @@ shape = SubResource("RectangleShape2D_8y25k")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("6_yylui")
 
 [connection signal="area_entered" from="AttackRange" to="." method="_on_attack_range_area_entered"]
 [connection signal="area_exited" from="AttackRange" to="." method="_on_attack_range_area_exited"]

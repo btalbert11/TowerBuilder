@@ -11,21 +11,18 @@ size = Vector2(46, 46)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mq8w"]
 size = Vector2(50, 51)
 
-[node name="TEST_ENEMY" type="Node2D" node_paths=PackedStringArray("_health_component", "_hurtbox", "_health_bar") groups=["Enemies"]]
+[node name="TEST_ENEMY" type="CharacterBody2D" node_paths=PackedStringArray("_health_component", "_hurtbox", "_health_bar") groups=["Enemies"]]
 script = ExtResource("1_v5abt")
 _health_component = NodePath("HealthComponent")
 _hurtbox = NodePath("HurtboxComponent")
-max_health = null
 _health_bar = NodePath("Healthbar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qrlet")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("1_d25j1")
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("RectangleShape2D_qrlet")
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
 collision_layer = 4

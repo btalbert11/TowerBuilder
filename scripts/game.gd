@@ -1,6 +1,5 @@
 extends Node2D
 
-@export var _camera: MainCamera
 @export var basic_tower: PackedScene
 @export var object_to_place: Node2D
 
@@ -30,11 +29,7 @@ func _unhandled_input(event):
 			turret.placement_initialize()
 			object_placement_mode = false
 			
-	# SCROLL FOR CAMERA ZOOM
-	if event.is_action_pressed("camera_zoom_in"):
-		_camera.zoom = _camera.zoom.move_toward(_camera.max_zoom, _camera.zoom_speed)
-	if event.is_action_pressed("camera_zoom_out"):
-		_camera.zoom = _camera.zoom.move_toward(_camera.min_zoom, _camera.zoom_speed)
+
 
 
 func _on_build_ui_purchase_basic_tower():
